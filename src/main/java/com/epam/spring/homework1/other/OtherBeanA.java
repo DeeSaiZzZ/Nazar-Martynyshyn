@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OtherBeanA {
+
     public OtherBeanA(BeanA beanA) {
         System.out.println(this.getClass().getSimpleName() + " " + beanA.getClass().getSimpleName() + " was injected by constructor.");
     }
+
 }

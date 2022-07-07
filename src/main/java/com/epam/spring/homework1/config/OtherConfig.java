@@ -8,4 +8,5 @@ import org.springframework.context.annotation.Import;
 @ComponentScan(basePackages = "com.epam.spring.homework1.other")
 @Import(PetConfig.class)
 public class OtherConfig {
+
 }
