@@ -7,11 +7,9 @@ public class BeanC extends BeanEntity {
         System.out.println("[Constructor] Constructor BeanC");
     }
 
-
     public void initMethod() {
         System.out.println("Init method BeanC");
     }
-
 
     public void destroyMethod() {
         System.out.println("Destroy method BeanC");

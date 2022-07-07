@@ -11,7 +11,6 @@ public class BeanD extends BeanEntity {
         System.out.println("Init method BeanD");
     }
 
-
     public void destroyMethod() {
         System.out.println("Destroy method BeanD");
     }

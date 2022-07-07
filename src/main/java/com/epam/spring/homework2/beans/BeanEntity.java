@@ -1,6 +1,7 @@
 package com.epam.spring.homework2.beans;
 
 public abstract class BeanEntity {
+
     protected String name;
     protected int value;
 

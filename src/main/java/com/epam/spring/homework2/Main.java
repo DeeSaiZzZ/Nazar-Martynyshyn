@@ -14,7 +14,6 @@ public class Main {
 
         System.out.println(">>> All beans: ");
         Arrays.stream(appContext.getBeanDefinitionNames())
-                .filter(s -> s.contains("getBean"))
                 .forEach(System.out::println);
 
         System.out.println("--------------------------------------------------------------------------");

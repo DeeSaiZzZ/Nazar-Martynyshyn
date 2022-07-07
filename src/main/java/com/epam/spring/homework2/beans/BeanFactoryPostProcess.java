@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BeanFactoryPostProcess implements BeanFactoryPostProcessor {
+
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
         configurableListableBeanFactory.getBeanDefinition("getBeanB").setInitMethodName("secondInitMethod");
