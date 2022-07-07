@@ -18,7 +18,7 @@ public class OtherBeanC {
     public void ifNotNull() {
         if (beanC == null) {
             System.out.println("Now BeanC is null.");
-        }else {
+        } else {
             System.out.println("Now BeanC not null.");
         }
     }
