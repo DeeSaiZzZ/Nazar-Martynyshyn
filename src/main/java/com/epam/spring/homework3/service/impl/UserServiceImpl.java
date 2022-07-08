@@ -1,6 +1,6 @@
 package com.epam.spring.homework3.service.impl;
 
-import com.epam.spring.homework3.dto.OrderDtoWithInfo;
+import com.epam.spring.homework3.dto.OrderDto;
 import com.epam.spring.homework3.dto.UserDto;
 import com.epam.spring.homework3.mapper.UserMapper;
 import com.epam.spring.homework3.model.User;
@@ -41,15 +41,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAllUser() {
         log.info("Get all user start");
-        return userRepository
-                .getAllUser()
-                .stream()
-                .map(mapper::mapUserToUserDto)
-                .collect(Collectors.toList());
+        return userRepository.getAllUser().stream().map(mapper::mapUserToUserDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<OrderDtoWithInfo> getUserOrder(int id) {
+    public List<OrderDto> getUserOrder(int id) {
         log.info("Get users order id {}", id);
         return orderService.getOrderByUserId(id);
     }

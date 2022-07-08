@@ -1,3 +1,24 @@
+management:
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "info, health"
+  endpoint:
+    health:
+      show-details: always
+
+info:
+  application:
+    author: Nazar Martynyshyn
+    name: Beauty-Salon-Management
+    description: API for management beauty salon
+    version: 1.0.1-SNAPSHOT
+    javaVersion: ${java.version}
+    organisation: Epam Lab RD#32
+
 User:
   id: -1
   firstName: admin1

@@ -4,8 +4,7 @@ import com.epam.spring.homework3.model.enums.Status;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
@@ -21,8 +20,8 @@ public class Order {
     private Favor orderFavor;
 
     private Status orderStatus;
-    private LocalDateTime timeSlot;
-    private LocalDate completeDate;
+    private Date timeSlot;
+    private Date completeDate;
 
     public void updateData(Order order) {
         this.userId = order.userId;
@@ -35,5 +34,4 @@ public class Order {
         this.timeSlot = order.timeSlot;
         this.completeDate = order.completeDate;
     }
-
 }

@@ -1,6 +1,6 @@
 package com.epam.spring.homework3.service;
 
-import com.epam.spring.homework3.dto.OrderDtoWithInfo;
+import com.epam.spring.homework3.dto.OrderDto;
 import com.epam.spring.homework3.dto.UserDto;
 
 import java.util.List;
@@ -12,5 +12,5 @@ public interface UserService {
 
     List<UserDto> getAllUser();
 
-    List<OrderDtoWithInfo> getUserOrder(int id);
+    List<OrderDto> getUserOrder(int id);
 }

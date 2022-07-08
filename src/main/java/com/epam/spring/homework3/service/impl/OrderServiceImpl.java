@@ -1,7 +1,6 @@
 package com.epam.spring.homework3.service.impl;
 
 import com.epam.spring.homework3.dto.OrderDto;
-import com.epam.spring.homework3.dto.OrderDtoWithInfo;
 import com.epam.spring.homework3.mapper.OrderMapper;
 import com.epam.spring.homework3.model.Order;
 import com.epam.spring.homework3.repository.FavorRepository;
@@ -28,7 +27,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper mapper;
 
     @Override
-    public OrderDtoWithInfo createOrder(OrderDto orderDto) {
+    public OrderDto createOrder(OrderDto orderDto) {
         log.info("Start create order");
         Order order = mapper.orderDtoToOrder(orderDto);
 
@@ -39,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
         log.info("New order entity - {}", order);
 
         order = orderRepository.addOrder(order);
-        return mapper.orderToOrderDtoWithInfo(order);
+        return mapper.orderToOrderDto(order);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDtoWithInfo updateOrder(int id, OrderDto orderDto) {
+    public OrderDto updateOrder(int id, OrderDto orderDto) {
         log.info("Update order by id {}", id);
         Order order = mapper.orderDtoToOrder(orderDto);
 
@@ -60,22 +59,22 @@ public class OrderServiceImpl implements OrderService {
         log.trace("New data - {}", order);
 
         order = orderRepository.updateOrder(id, order);
-        return mapper.orderToOrderDtoWithInfo(order);
+        return mapper.orderToOrderDto(order);
     }
 
     @Override
-    public List<OrderDtoWithInfo> getAllOrder() {
+    public List<OrderDto> getAllOrder() {
         log.info("Get all order start");
         return orderRepository.getAllOrder()
                 .stream()
-                .map(mapper::orderToOrderDtoWithInfo)
+                .map(mapper::orderToOrderDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<OrderDtoWithInfo> getOrderByUserId(int id) {
+    public List<OrderDto> getOrderByUserId(int id) {
         return orderRepository.getOrderByUserId(id).stream()
-                .map(mapper::orderToOrderDtoWithInfo)
+                .map(mapper::orderToOrderDto)
                 .collect(Collectors.toList());
     }
 }

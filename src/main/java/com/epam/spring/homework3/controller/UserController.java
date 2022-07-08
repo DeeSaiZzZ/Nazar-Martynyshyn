@@ -1,6 +1,6 @@
 package com.epam.spring.homework3.controller;
 
-import com.epam.spring.homework3.dto.OrderDtoWithInfo;
+import com.epam.spring.homework3.dto.OrderDto;
 import com.epam.spring.homework3.dto.UserDto;
 import com.epam.spring.homework3.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}/order")
-    List<OrderDtoWithInfo> getUserOrder(@PathVariable int id) {
+    List<OrderDto> getUserOrder(@PathVariable int id) {
         log.info("Get users order, user id {}", id);
         return userService.getUserOrder(id);
     }

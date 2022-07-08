@@ -1,7 +1,6 @@
 package com.epam.spring.homework3.controller;
 
 import com.epam.spring.homework3.dto.OrderDto;
-import com.epam.spring.homework3.dto.OrderDtoWithInfo;
 import com.epam.spring.homework3.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,21 +20,21 @@ public class OrderController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping
-    OrderDtoWithInfo createOrder(@RequestBody OrderDto orderDto) {
+    OrderDto createOrder(@RequestBody OrderDto orderDto) {
         log.info("Create order, request body {}", orderDto);
         return orderService.createOrder(orderDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    List<OrderDtoWithInfo> getOrder() {
+    List<OrderDto> getOrder() {
         log.info("Get all order");
         return orderService.getAllOrder();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    OrderDtoWithInfo updateOrder(@PathVariable int id, @RequestBody OrderDto orderDto) {
+    OrderDto updateOrder(@PathVariable int id, @RequestBody OrderDto orderDto) {
         log.info("Update order with id {} new entity {}", id, orderDto);
         return orderService.updateOrder(id, orderDto);
     }
