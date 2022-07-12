@@ -2,6 +2,7 @@ package com.epam.spring.homework3.controller;
 
 import com.epam.spring.homework3.dto.FavorDto;
 import com.epam.spring.homework3.dto.groups.OnCreate;
+import com.epam.spring.homework3.dto.groups.OnUpdate;
 import com.epam.spring.homework3.model.enums.Speciality;
 import com.epam.spring.homework3.service.FavorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,7 +53,7 @@ public class FavorController {
             description = "Fill all field in RequestBody entity",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Favor entity for create"),
             responses = @ApiResponse(responseCode = "201"))
-    FavorDto createFavor(@RequestBody @Validated({OnCreate.class}) FavorDto favorDto) {
+    FavorDto createFavor(@RequestBody @Validated(OnCreate.class) FavorDto favorDto) {
         log.info("Create favor");
         log.trace("Request body {}", favorDto);
         return favorService.createFavor(favorDto);
@@ -63,7 +64,7 @@ public class FavorController {
     @Operation(method = "PUT",
             summary = "Update favor entity",
             description = "Enter all field in request body")
-    FavorDto updateFavor(@PathVariable int id, @RequestBody FavorDto favorDto) {
+    FavorDto updateFavor(@PathVariable int id, @RequestBody @Validated(OnUpdate.class) FavorDto favorDto) {
         return favorService.updateFavor(id, favorDto);
     }
 

@@ -1,6 +1,7 @@
 package com.epam.spring.homework3.controller;
 
 import com.epam.spring.homework3.dto.OrderDto;
+import com.epam.spring.homework3.dto.groups.OnCreate;
 import com.epam.spring.homework3.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -40,7 +41,7 @@ public class OrderController {
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Fill field id in orderUser, " +
                     "orderMaster, orderFavor"),
             responses = @ApiResponse(responseCode = "201"))
-    OrderDto createOrder(@RequestBody @Validated OrderDto orderDto) {
+    OrderDto createOrder(@RequestBody @Validated(OnCreate.class) OrderDto orderDto) {
         log.info("Create order, request body {}", orderDto);
         return orderService.createOrder(orderDto);
     }
@@ -52,7 +53,7 @@ public class OrderController {
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Fill field id in orderUser, " +
                     "orderMaster, orderFavor"),
             responses = @ApiResponse(responseCode = "200"))
-    OrderDto updateOrder(@PathVariable int id, @RequestBody @Validated OrderDto orderDto) {
+    OrderDto updateOrder(@PathVariable int id, @RequestBody OrderDto orderDto) {
         log.info("Update order with id {} new entity {}", id, orderDto);
         return orderService.updateOrder(id, orderDto);
     }

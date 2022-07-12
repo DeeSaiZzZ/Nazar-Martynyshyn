@@ -2,6 +2,8 @@ package com.epam.spring.homework3.controller;
 
 import com.epam.spring.homework3.dto.OrderDto;
 import com.epam.spring.homework3.dto.UserDto;
+import com.epam.spring.homework3.dto.groups.OnCreate;
+import com.epam.spring.homework3.dto.groups.OnUpdate;
 import com.epam.spring.homework3.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -52,14 +54,14 @@ public class UserController {
             description = "Fill all field in RequestBody entity",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User entity for create"),
             responses = @ApiResponse(responseCode = "201"))
-    UserDto createUser(@RequestBody @Validated UserDto userDto) {
+    UserDto createUser(@RequestBody @Validated(OnCreate.class) UserDto userDto) {
         log.info("Create user, request body {}", userDto);
         return userService.createUser(userDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    UserDto updateUser(@PathVariable int id, @RequestBody UserDto userDto) {
+    UserDto updateUser(@PathVariable int id, @RequestBody @Validated(OnUpdate.class) UserDto userDto) {
         return userService.updateUser(id, userDto);
     }
 

@@ -1,6 +1,8 @@
 package com.epam.spring.homework3.controller;
 
 import com.epam.spring.homework3.dto.MasterDto;
+import com.epam.spring.homework3.dto.groups.OnCreate;
+import com.epam.spring.homework3.dto.groups.OnUpdate;
 import com.epam.spring.homework3.model.enums.MasterSortType;
 import com.epam.spring.homework3.model.enums.Speciality;
 import com.epam.spring.homework3.service.MasterService;
@@ -51,14 +53,14 @@ public class MasterController {
             summary = "Create new master",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "All attributes are require"),
             responses = @ApiResponse(responseCode = "201"))
-    MasterDto createMaster(@RequestBody @Validated MasterDto masterDto) {
+    MasterDto createMaster(@RequestBody @Validated(OnCreate.class) MasterDto masterDto) {
         log.info("Create master, request body {}", masterDto);
         return masterService.createMaster(masterDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}")
-    MasterDto updateMater(@PathVariable int id, @RequestBody MasterDto masterDto) {
+    MasterDto updateMater(@PathVariable int id, @RequestBody @Validated(OnUpdate.class) MasterDto masterDto) {
         return masterService.updateMaster(id, masterDto);
     }
 

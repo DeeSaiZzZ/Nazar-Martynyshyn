@@ -36,7 +36,9 @@ public class MasterServiceImpl implements MasterService {
         log.info("Start get master with id {}", masterId);
         Master master = masterRepository.getMaster(masterId);
         log.info("Finder master - {}", master);
-        return mapper.masterToMasterDto(master);
+        MasterDto masterDto = mapper.masterToMasterDto(master);
+        master.setPassword(null);
+        return masterDto;
     }
 
     @Override
@@ -69,6 +71,7 @@ public class MasterServiceImpl implements MasterService {
                 })
                 .filter(filterParam != null && !filterParam.isEmpty() ? master -> filterParam.contains(master.getSpeciality()) : master -> true)
                 .map(mapper::masterToMasterDto)
+                .peek(masterDto -> masterDto.setPassword(null))
                 .collect(Collectors.toList());
     }
 

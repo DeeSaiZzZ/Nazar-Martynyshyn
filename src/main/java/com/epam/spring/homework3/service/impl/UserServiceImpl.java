@@ -48,7 +48,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAllUser() {
         log.info("Get all user start");
-        return userRepository.getAllUser().stream().map(mapper::mapUserToUserDto).collect(Collectors.toList());
+        return userRepository.getAllUser().stream()
+                .map(mapper::mapUserToUserDto)
+                .peek(userDto -> userDto.setPassword(null))
+                .collect(Collectors.toList());
     }
 
     @Override
