@@ -8,12 +8,9 @@ import java.util.Date;
 
 @Data
 @Builder
-public class Order {
+public class Order implements Updatable<Order> {
 
     private int id;
-    private int userId;
-    private int masterId;
-    private int favorId;
 
     private User orderUser;
     private Master orderMaster;
@@ -23,10 +20,7 @@ public class Order {
     private Date timeSlot;
     private Date completeDate;
 
-    public void updateData(Order order) {
-        this.userId = order.userId;
-        this.masterId = order.masterId;
-        this.favorId = order.favorId;
+    public void update(Order order) {
         this.orderUser = order.orderUser;
         this.orderMaster = order.orderMaster;
         this.orderFavor = order.orderFavor;

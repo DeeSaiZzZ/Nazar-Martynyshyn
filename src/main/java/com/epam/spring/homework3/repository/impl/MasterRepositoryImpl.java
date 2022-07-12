@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @Component
@@ -26,6 +27,16 @@ public class MasterRepositoryImpl implements MasterRepository {
         master.setRole(Role.MASTER);
         masterList.add(master);
         return master;
+    }
+
+    @Override
+    public Master updateMaster(int id, Master master) {
+        Master updatableMaster = masterList.stream()
+                .filter(o -> o.getId() == id)
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
+        updatableMaster.update(master);
+        return updatableMaster;
     }
 
     @Override

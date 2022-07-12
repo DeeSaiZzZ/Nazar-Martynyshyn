@@ -37,14 +37,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public Order updateOrder(int id, Order newOrder) {
         log.info("Update order by id {}", id);
-        Order updatableOrder = orderList.stream().filter(o -> o.getId() == id).findFirst().orElse(null);
+        Order updatableOrder = orderList.stream().filter(o -> o.getId() == id).findFirst().orElseThrow(NoSuchElementException::new);
         log.trace("Order before update - {}", updatableOrder);
-        if (updatableOrder != null) {
-            updatableOrder.updateData(newOrder);
-        } else {
-            log.trace("Order with id {} not found", id);
-            throw new NoSuchElementException("Order not found!");
-        }
+        updatableOrder.update(newOrder);
         log.trace("Order after update - {}", updatableOrder);
         return updatableOrder;
     }
@@ -58,7 +53,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public List<Order> getOrderByUserId(int id) {
         return orderList.stream()
-                .filter(order -> order.getUserId() == id)
+                .filter(order -> order.getOrderUser().getId() == id)
                 .collect(Collectors.toList());
     }
 }

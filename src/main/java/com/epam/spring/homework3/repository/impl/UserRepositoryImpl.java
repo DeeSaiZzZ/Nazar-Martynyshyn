@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @Component
@@ -22,6 +23,16 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> getAllUser() {
         log.info("Get all user");
         return new ArrayList<>(userList);
+    }
+
+    @Override
+    public User updateUser(int id, User user) {
+        User updatableUser = userList.stream()
+                .filter(o -> o.getId() == id)
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
+        updatableUser.update(user);
+        return updatableUser;
     }
 
     @Override

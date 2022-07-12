@@ -33,6 +33,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto updateUser(int id, UserDto userDto) {
+        User user = mapper.mapUserDtoToUser(userDto);
+        user = userRepository.updateUser(id, user);
+        return mapper.mapUserToUserDto(user);
+    }
+
+    @Override
     public void deleteUser(int id) {
         log.info("Delete user by id {}", id);
         userRepository.deleteUser(id);

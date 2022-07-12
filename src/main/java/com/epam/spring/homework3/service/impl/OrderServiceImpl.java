@@ -31,9 +31,9 @@ public class OrderServiceImpl implements OrderService {
         log.info("Start create order");
         Order order = mapper.orderDtoToOrder(orderDto);
 
-        order.setOrderFavor(favorRepository.getFavor(order.getFavorId()));
-        order.setOrderMaster(masterRepository.getMaster(order.getMasterId()));
-        order.setOrderUser(userRepository.getUserById(order.getUserId()));
+        order.setOrderFavor(favorRepository.getFavor(order.getOrderFavor().getId()));
+        order.setOrderMaster(masterRepository.getMaster(order.getOrderMaster().getId()));
+        order.setOrderUser(userRepository.getUserById(order.getOrderUser().getId()));
 
         log.info("New order entity - {}", order);
 
@@ -52,9 +52,9 @@ public class OrderServiceImpl implements OrderService {
         log.info("Update order by id {}", id);
         Order order = mapper.orderDtoToOrder(orderDto);
 
-        order.setOrderFavor(favorRepository.getFavor(order.getFavorId()));
-        order.setOrderMaster(masterRepository.getMaster(order.getMasterId()));
-        order.setOrderUser(userRepository.getUserById(order.getUserId()));
+        order.setOrderFavor(favorRepository.getFavor(order.getOrderFavor().getId()));
+        order.setOrderMaster(masterRepository.getMaster(order.getOrderMaster().getId()));
+        order.setOrderUser(userRepository.getUserById(order.getOrderUser().getId()));
 
         log.trace("New data - {}", order);
 
