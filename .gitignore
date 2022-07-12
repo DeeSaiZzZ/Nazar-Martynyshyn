@@ -27,7 +27,7 @@ target/
 /.nb-gradle/
 build/
 /target/
-**/test/java/com/epam/spring/homework3/
+**/test/java/com/epam/spring/homework4/
 !**/src/main/**/build/
 !**/src/test/**/build/
 ### VS Code ###
