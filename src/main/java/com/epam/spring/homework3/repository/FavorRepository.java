@@ -11,5 +11,7 @@ public interface FavorRepository {
 
     Favor createFavor(Favor favor);
 
+    Favor updateFavor(int id, Favor favor);
+
     void deleteFavor(int id);
 }

@@ -6,7 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface MasterMapper {
-
     MasterDto masterToMasterDto(Master master);
 
     Master masterDtoToMaster(MasterDto masterDto);

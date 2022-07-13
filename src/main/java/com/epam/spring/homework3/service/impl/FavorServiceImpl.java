@@ -27,9 +27,15 @@ public class FavorServiceImpl implements FavorService {
         return favorRepository
                 .getAllFavor()
                 .stream()
-                .filter(filterParam != null ? favor -> filterParam.contains(favor.getSpeciality()) : favor -> true)
+                .filter(filterParam != null && !filterParam.isEmpty() ? favor -> filterParam.contains(favor.getSpeciality()) : favor -> true)
                 .map(mapper::favorToFavorDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public FavorDto getFavor(int id) {
+        Favor favor = favorRepository.getFavor(id);
+        return mapper.favorToFavorDto(favor);
     }
 
     @Override
@@ -38,6 +44,13 @@ public class FavorServiceImpl implements FavorService {
         Favor favor = mapper.favorDtoToFavor(favorDto);
         log.trace("New entity - {}", favor);
         favor = favorRepository.createFavor(favor);
+        return mapper.favorToFavorDto(favor);
+    }
+
+    @Override
+    public FavorDto updateFavor(int id, FavorDto favorDto) {
+        Favor favor = mapper.favorDtoToFavor(favorDto);
+        favor = favorRepository.updateFavor(id, favor);
         return mapper.favorToFavorDto(favor);
     }
 

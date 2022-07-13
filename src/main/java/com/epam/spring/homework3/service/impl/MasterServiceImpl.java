@@ -3,6 +3,7 @@ package com.epam.spring.homework3.service.impl;
 import com.epam.spring.homework3.dto.MasterDto;
 import com.epam.spring.homework3.mapper.MasterMapper;
 import com.epam.spring.homework3.model.Master;
+import com.epam.spring.homework3.model.enums.MasterSortType;
 import com.epam.spring.homework3.model.enums.Speciality;
 import com.epam.spring.homework3.repository.MasterRepository;
 import com.epam.spring.homework3.service.MasterService;
@@ -35,11 +36,20 @@ public class MasterServiceImpl implements MasterService {
         log.info("Start get master with id {}", masterId);
         Master master = masterRepository.getMaster(masterId);
         log.info("Finder master - {}", master);
+        MasterDto masterDto = mapper.masterToMasterDto(master);
+        masterDto.setPassword(null);
+        return masterDto;
+    }
+
+    @Override
+    public MasterDto updateMaster(int id, MasterDto masterDto) {
+        Master master = mapper.masterDtoToMaster(masterDto);
+        master = masterRepository.updateMaster(id, master);
         return mapper.masterToMasterDto(master);
     }
 
     @Override
-    public List<MasterDto> getAllMaster(List<Speciality> filterParam, String sortType) {
+    public List<MasterDto> getAllMaster(List<Speciality> filterParam, MasterSortType sortType) {
         log.trace("Get all master filer param: {}, sort type - {}", filterParam, sortType);
         return masterRepository
                 .getAllMaster()
@@ -47,9 +57,9 @@ public class MasterServiceImpl implements MasterService {
                 .sorted((o1, o2) -> {
                     if (sortType == null) {
                         return 0;
-                    } else if (sortType.equals("byName")) {
+                    } else if (sortType.equals(MasterSortType.BY_NAME)) {
                         return o1.getFirstName().compareTo(o2.getFirstName());
-                    } else if (sortType.equals("byRate")) {
+                    } else if (sortType.equals(MasterSortType.BY_RATE)) {
                         if (o1.getRate() > o2.getRate()) {
                             return 1;
                         } else {
@@ -59,8 +69,9 @@ public class MasterServiceImpl implements MasterService {
                         return 0;
                     }
                 })
-                .filter(filterParam != null ? master -> filterParam.contains(master.getSpeciality()) : master -> true)
+                .filter(filterParam != null && !filterParam.isEmpty() ? master -> filterParam.contains(master.getSpeciality()) : master -> true)
                 .map(mapper::masterToMasterDto)
+                .peek(masterDto -> masterDto.setPassword(null))
                 .collect(Collectors.toList());
     }
 

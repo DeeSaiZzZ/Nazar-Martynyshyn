@@ -9,4 +9,14 @@ import lombok.EqualsAndHashCode;
 public class Master extends User {
     private double rate;
     private Speciality speciality;
+
+    @Override
+    public void update(User entity) {
+        super.update(entity);
+        if (entity instanceof Master) {
+            Master master = (Master) entity;
+            this.rate = master.rate;
+            this.speciality = master.speciality;
+        }
+    }
 }

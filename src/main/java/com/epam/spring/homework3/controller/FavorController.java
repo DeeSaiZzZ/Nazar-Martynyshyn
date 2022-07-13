@@ -20,6 +20,12 @@ public class FavorController {
     private final FavorService favorService;
 
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{id}")
+    FavorDto getFavor(@PathVariable int id) {
+        return favorService.getFavor(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping
     List<FavorDto> getFavor(@RequestParam(required = false) List<Speciality> filterParam) {
         log.info("Get all favour");
@@ -32,6 +38,12 @@ public class FavorController {
         log.info("Create favor");
         log.trace("Request body {}", favorDto);
         return favorService.createFavor(favorDto);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{id}")
+    FavorDto updateFavor(@PathVariable int id, @RequestBody FavorDto favorDto) {
+        return favorService.updateFavor(id, favorDto);
     }
 
     @DeleteMapping("/{id}")

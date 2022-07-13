@@ -7,6 +7,8 @@ import java.util.List;
 public interface MasterRepository {
     Master createMaster(Master master);
 
+    Master updateMaster(int id, Master master);
+
     void deleteMaster(int id);
 
     Master getMaster(int masterId);

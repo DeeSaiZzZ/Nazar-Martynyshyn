@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -20,7 +19,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     private int idCounter = 1;
 
     @Override
-    public Order addOrder(Order order) {
+    public Order createOrder(Order order) {
         log.info("Create order");
         log.trace("Order id = {}", idCounter);
         order.setId(idCounter++);
@@ -37,14 +36,12 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public Order updateOrder(int id, Order newOrder) {
         log.info("Update order by id {}", id);
-        Order updatableOrder = orderList.stream().filter(o -> o.getId() == id).findFirst().orElse(null);
+        Order updatableOrder = orderList.stream()
+                .filter(o -> o.getId() == id)
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
         log.trace("Order before update - {}", updatableOrder);
-        if (updatableOrder != null) {
-            updatableOrder.updateData(newOrder);
-        } else {
-            log.trace("Order with id {} not found", id);
-            throw new NoSuchElementException("Order not found!");
-        }
+        updatableOrder.update(newOrder);
         log.trace("Order after update - {}", updatableOrder);
         return updatableOrder;
     }
@@ -55,10 +52,4 @@ public class OrderRepositoryImpl implements OrderRepository {
         return new ArrayList<>(orderList);
     }
 
-    @Override
-    public List<Order> getOrderByUserId(int id) {
-        return orderList.stream()
-                .filter(order -> order.getUserId() == id)
-                .collect(Collectors.toList());
-    }
 }

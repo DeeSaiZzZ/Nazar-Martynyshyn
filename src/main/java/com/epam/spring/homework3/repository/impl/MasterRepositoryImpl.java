@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @Component
@@ -29,6 +30,16 @@ public class MasterRepositoryImpl implements MasterRepository {
     }
 
     @Override
+    public Master updateMaster(int id, Master master) {
+        Master updatableMaster = masterList.stream()
+                .filter(o -> o.getId() == id)
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
+        updatableMaster.update(master);
+        return updatableMaster;
+    }
+
+    @Override
     public void deleteMaster(int id) {
         log.info("Delete master by id {}", id);
         masterList.removeIf(master -> master.getId() == id);
@@ -40,7 +51,7 @@ public class MasterRepositoryImpl implements MasterRepository {
         return masterList.stream()
                 .filter(master -> master.getId() == id)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(NoSuchElementException::new);
     }
 
     @Override

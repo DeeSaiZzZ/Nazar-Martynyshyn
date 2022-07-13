@@ -8,7 +8,11 @@ import java.util.List;
 public interface FavorService {
     List<FavorDto> getAllFavor(List<Speciality> filterParam);
 
+    FavorDto getFavor(int id);
+
     FavorDto createFavor(FavorDto favorDto);
+
+    FavorDto updateFavor(int id, FavorDto favorDto);
 
     void deleteFavor(int id);
 }

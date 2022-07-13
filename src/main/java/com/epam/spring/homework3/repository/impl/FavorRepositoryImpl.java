@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @Component
@@ -30,7 +31,7 @@ public class FavorRepositoryImpl implements FavorRepository {
         log.info("Get favor by id {}", id);
         return favors.stream()
                 .filter(favor -> favor.getId() == id).findFirst()
-                .orElse(null);
+                .orElseThrow(NoSuchElementException::new);
     }
 
     @Override
@@ -40,6 +41,19 @@ public class FavorRepositoryImpl implements FavorRepository {
         favor.setId(idCounter++);
         favors.add(favor);
         return favor;
+    }
+
+    @Override
+    public Favor updateFavor(int id, Favor favor) {
+        log.info("Update favor by id {}", id);
+        Favor updatableFavor = favors.stream()
+                .filter(o -> o.getId() == id)
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
+        log.trace("Favor before update - {}", updatableFavor);
+        updatableFavor.update(favor);
+        log.trace("Order after update - {}", updatableFavor);
+        return updatableFavor;
     }
 
     @Override
