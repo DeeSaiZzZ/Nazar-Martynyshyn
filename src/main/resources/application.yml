@@ -1,0 +1,7 @@
+User:
+  id: -1
+  firstName: admin1
+  lastName: admin1
+  email: admin1@mail.com
+  password: adm123
+  role: ADMIN
