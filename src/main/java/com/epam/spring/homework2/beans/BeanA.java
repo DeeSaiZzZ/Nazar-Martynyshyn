@@ -12,13 +12,13 @@ public class BeanA extends BeanEntity implements InitializingBean, DisposableBea
     @Override
     public void afterPropertiesSet() {
         System.out.println(">>> [AfterPropertiesSetBeanA] Set name = Mr.AfterProperSetBeanA and value = 22");
-        name = "Mr.AfterProperSetBeanA";
-        value = 22;
+        this.setName("Mr.AfterProperSetBeanA");
+        this.setValue(22);
     }
 
     @Override
     public void destroy() {
         System.out.println(">>> [DestroyBeanA] Destroy method in BeanA work!");
-        System.out.println("I'm " + name + " destroyed!");
+        System.out.println("I'm " + this.getName() + " destroyed!");
     }
 }

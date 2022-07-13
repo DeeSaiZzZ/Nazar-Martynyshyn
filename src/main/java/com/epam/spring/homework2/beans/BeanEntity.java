@@ -2,11 +2,12 @@ package com.epam.spring.homework2.beans;
 
 public abstract class BeanEntity {
 
-    protected String name;
-    protected int value;
+    private String name;
+    private int value;
 
     public BeanEntity() {
-
+        //Constructor required for the BeanA class constructor to work
+        System.out.println("[Constructor] Constructor BeanEntity");
     }
 
     public BeanEntity(String name, int value) {
@@ -29,5 +30,21 @@ public abstract class BeanEntity {
         } else {
             System.out.println("Field valid");
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

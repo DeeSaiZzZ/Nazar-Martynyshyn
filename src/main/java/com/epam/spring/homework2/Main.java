@@ -12,10 +12,13 @@ public class Main {
 
         System.out.println("--------------------------------------------------------------------------");
 
-        System.out.println(">>> All beans: ");
+        System.out.println(">>> All BeanDefinitionNames: ");
         Arrays.stream(appContext.getBeanDefinitionNames())
                 .forEach(System.out::println);
 
+        System.out.println(">>>All BeanDefinition:");
+        Arrays.stream(appContext.getBeanDefinitionNames())
+                .forEach(name -> System.out.println(appContext.getBeanDefinition(name)));
         System.out.println("--------------------------------------------------------------------------");
 
         System.out.println(">>> Beans name's and value's: ");
