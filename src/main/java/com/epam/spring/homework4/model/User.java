@@ -16,14 +16,17 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements Updatable<User> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String surname;
+
     @Column(nullable = false, unique = true)
     private String email;
     private String password;
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
 

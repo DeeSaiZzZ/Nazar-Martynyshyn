@@ -15,14 +15,18 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Favor implements Updatable<Favor> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(nullable = false, unique = true)
     private String name;
+
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private Speciality speciality;
+
     @Column(nullable = false)
     private int price;
 

@@ -18,7 +18,9 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Master extends User {
+
     private double rate;
+
     @Enumerated(value = EnumType.STRING)
     private Speciality speciality;
 
