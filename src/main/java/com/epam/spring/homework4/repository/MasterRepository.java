@@ -1,17 +1,17 @@
 package com.epam.spring.homework4.repository;
 
 import com.epam.spring.homework4.model.Master;
+import com.epam.spring.homework4.model.enums.Speciality;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface MasterRepository {
-    Master createMaster(Master master);
+@Repository
+public interface MasterRepository extends JpaRepository<Master, Integer> {
+    Page<Master> findBySpecialityIn(List<Speciality> specialities, Pageable pageable);
 
-    Master updateMaster(int id, Master master);
-
-    void deleteMaster(int id);
-
-    Master getMaster(int masterId);
-
-    List<Master> getAllMaster();
+    boolean existsByEmail(String email);
 }

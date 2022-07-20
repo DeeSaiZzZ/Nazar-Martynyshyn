@@ -3,7 +3,6 @@ package com.epam.spring.homework4.dto;
 import com.epam.spring.homework4.dto.groups.OnCreate;
 import com.epam.spring.homework4.dto.groups.OnUpdate;
 import com.epam.spring.homework4.utils.anotations.RequiredPasswordLength;
-import com.epam.spring.homework4.utils.anotations.UniqueEmail;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -20,12 +19,11 @@ public class UserDto {
     private int id;
 
     @NotBlank(message = "{user.firstName.NotBlank}}")
-    private String firstName;
+    private String name;
 
     @NotBlank(message = "{user.lastName.NotBlank}}")
-    private String lastName;
+    private String surname;
 
-    @UniqueEmail(message = "{user.email.UniqueEmail}")
     @Email(message = "{user.email.Email}")
     @NotBlank(message = "{user.email.NotBlank}")
     private String email;

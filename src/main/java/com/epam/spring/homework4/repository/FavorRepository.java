@@ -1,17 +1,17 @@
 package com.epam.spring.homework4.repository;
 
 import com.epam.spring.homework4.model.Favor;
+import com.epam.spring.homework4.model.enums.Speciality;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface FavorRepository {
-    List<Favor> getAllFavor();
+@Repository
+public interface FavorRepository extends JpaRepository<Favor, Integer> {
+    Page<Favor> findAllBySpecialityIn(List<Speciality> specialities, Pageable pageable);
 
-    Favor getFavor(int id);
-
-    Favor createFavor(Favor favor);
-
-    Favor updateFavor(int id, Favor favor);
-
-    void deleteFavor(int id);
+    boolean existsByName(String name);
 }

@@ -3,6 +3,7 @@ package com.epam.spring.homework4.controller;
 import com.epam.spring.homework4.dto.FavorDto;
 import com.epam.spring.homework4.dto.groups.OnCreate;
 import com.epam.spring.homework4.dto.groups.OnUpdate;
+import com.epam.spring.homework4.model.CustomPage;
 import com.epam.spring.homework4.model.enums.Speciality;
 import com.epam.spring.homework4.service.FavorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,9 +42,10 @@ public class FavorController {
             summary = "Get all favor",
             description = "If need, select filter params",
             responses = @ApiResponse(responseCode = "200"))
-    List<FavorDto> getFavor(@RequestParam(required = false) List<Speciality> filterParam) {
+    CustomPage getFavor(@RequestParam(required = false) List<Speciality> filterParam,
+                        @RequestParam(defaultValue = "0") int pageNum) {
         log.info("Get all favour");
-        return favorService.getAllFavor(filterParam);
+        return favorService.getAllFavor(filterParam, pageNum);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

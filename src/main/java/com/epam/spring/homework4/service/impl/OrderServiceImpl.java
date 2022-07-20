@@ -3,11 +3,12 @@ package com.epam.spring.homework4.service.impl;
 import com.epam.spring.homework4.dto.OrderDto;
 import com.epam.spring.homework4.mapper.OrderMapper;
 import com.epam.spring.homework4.model.Order;
+import com.epam.spring.homework4.model.enums.Status;
+import com.epam.spring.homework4.model.exeptions.EntityNotFoundException;
 import com.epam.spring.homework4.repository.OrderRepository;
 import com.epam.spring.homework4.service.FavorService;
 import com.epam.spring.homework4.service.MasterService;
 import com.epam.spring.homework4.service.OrderService;
-import com.epam.spring.homework4.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,53 +22,47 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-
-    private final UserService userService;
     private final MasterService masterService;
     private final FavorService favorService;
-
     private final OrderMapper mapper;
 
     @Override
-    public OrderDto createOrder(OrderDto orderDto) {
+    public OrderDto createOrder(OrderDto orderDto) throws EntityNotFoundException {
         log.info("Start create order");
-
-        orderDto.setOrderFavor(favorService.getFavor(orderDto.getOrderFavor().getId()));
         orderDto.setOrderMaster(masterService.getMaster(orderDto.getOrderMaster().getId()));
-        orderDto.setOrderUser(userService.getUser(orderDto.getOrderUser().getId()));
+        orderDto.setOrderFavor(favorService.getFavor(orderDto.getOrderFavor().getId()));
 
         Order order = mapper.orderDtoToOrder(orderDto);
+        order.setOrderStatus(Status.FREE);
         log.info("New order entity - {}", order);
-        order = orderRepository.createOrder(order);
+        order = orderRepository.save(order);
         return mapper.orderToOrderDto(order);
-    }
-
-    @Override
-    public void deleteOrder(int id) {
-        log.info("Delete order by id {}", id);
-        orderRepository.deleteOrder(id);
     }
 
     @Override
     public OrderDto updateOrder(int id, OrderDto orderDto) {
         log.info("Update order by id {}", id);
-
-        orderDto.setOrderFavor(favorService.getFavor(orderDto.getOrderFavor().getId()));
-        orderDto.setOrderMaster(masterService.getMaster(orderDto.getOrderMaster().getId()));
-        orderDto.setOrderUser(userService.getUser(orderDto.getOrderUser().getId()));
-
         Order order = mapper.orderDtoToOrder(orderDto);
+        Order persistOrder = orderRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        persistOrder.update(order);
         log.trace("New data - {}", order);
-        order = orderRepository.updateOrder(id, order);
+        order = orderRepository.save(persistOrder);
         return mapper.orderToOrderDto(order);
     }
 
     @Override
     public List<OrderDto> getAllOrder() {
         log.info("Get all order start");
-        return orderRepository.getAllOrder()
+        return orderRepository.findAll()
                 .stream()
                 .map(mapper::orderToOrderDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteOrder(int id) {
+        log.info("Delete order by id {}", id);
+        orderRepository.deleteById(id);
     }
 }

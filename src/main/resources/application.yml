@@ -10,6 +10,22 @@ management:
     health:
       show-details: always
 
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/BeautySalon
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: always
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+
+
 info:
   application:
     author: Nazar Martynyshyn
@@ -18,11 +34,3 @@ info:
     version: 1.0.1-SNAPSHOT
     javaVersion: ${java.version}
     organisation: Epam Lab RD#32
-
-User:
-  id: -1
-  firstName: admin1
-  lastName: admin1
-  email: admin1@mail.com
-  password: adm123
-  role: ADMIN

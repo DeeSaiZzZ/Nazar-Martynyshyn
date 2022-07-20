@@ -12,6 +12,7 @@ public abstract class ServiceException extends RuntimeException {
         super(message);
     }
 
+
     public ErrorType getErrorType() {
         return ErrorType.FATAL_ERROR_TYPE;
     }

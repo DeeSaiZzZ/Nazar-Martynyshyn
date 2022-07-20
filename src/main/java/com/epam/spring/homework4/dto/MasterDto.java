@@ -4,7 +4,6 @@ import com.epam.spring.homework4.dto.groups.OnCreate;
 import com.epam.spring.homework4.dto.groups.OnUpdate;
 import com.epam.spring.homework4.model.enums.Speciality;
 import com.epam.spring.homework4.utils.anotations.RequiredPasswordLength;
-import com.epam.spring.homework4.utils.anotations.UniqueEmail;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -19,12 +18,11 @@ public class MasterDto {
     private int id;
 
     @NotBlank(message = "{master.firstName.NotBlank}")
-    private String firstName;
+    private String name;
 
     @NotBlank(message = "{master.lastName.NotBlank}")
-    private String lastName;
+    private String surname;
 
-    @UniqueEmail(message = "{master.email.UniqueEmail}")
     @Email(message = "{master.email.Email}")
     @NotBlank(message = "{master.email.NotBlank}")
     private String email;
@@ -40,5 +38,6 @@ public class MasterDto {
     @DecimalMin(value = "0.0", message = "{master.rate.DecimalMin}")
     private double rate;
 
+    @NotNull
     private Speciality speciality;
 }

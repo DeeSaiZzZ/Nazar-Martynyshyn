@@ -1,21 +1,39 @@
 package com.epam.spring.homework4.model;
 
 import com.epam.spring.homework4.model.enums.Status;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
+import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
-@Data
-@Builder
+
+@Entity
+@Table(name = "orders")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order implements Updatable<Order> {
 
-    private int id;
+    @Id
+    private Integer id;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User orderUser;
+
+    @ManyToOne
+    @JoinColumn(name = "master_id", referencedColumnName = "id")
     private Master orderMaster;
+
+    @ManyToOne
+    @JoinColumn(name = "favor_id", referencedColumnName = "id")
     private Favor orderFavor;
 
+    @Enumerated(value = EnumType.STRING)
     private Status orderStatus;
     private Date timeSlot;
     private Date completeDate;
@@ -27,5 +45,18 @@ public class Order implements Updatable<Order> {
         this.orderStatus = order.orderStatus;
         this.timeSlot = order.timeSlot;
         this.completeDate = order.completeDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Order order = (Order) o;
+        return id != null && Objects.equals(id, order.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

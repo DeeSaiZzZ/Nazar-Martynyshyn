@@ -10,6 +10,10 @@ public class EntityNotFoundException extends ServiceException {
         super(DEFAULT_MESSAGE);
     }
 
+    public EntityNotFoundException(String message) {
+        super(message);
+    }
+
     @Override
     public ErrorType getErrorType() {
         return ErrorType.VALIDATION_ERROR_TYPE;

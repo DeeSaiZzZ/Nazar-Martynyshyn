@@ -3,6 +3,7 @@ package com.epam.spring.homework4.controller;
 import com.epam.spring.homework4.dto.MasterDto;
 import com.epam.spring.homework4.dto.groups.OnCreate;
 import com.epam.spring.homework4.dto.groups.OnUpdate;
+import com.epam.spring.homework4.model.CustomPage;
 import com.epam.spring.homework4.model.enums.MasterSortType;
 import com.epam.spring.homework4.model.enums.Speciality;
 import com.epam.spring.homework4.service.MasterService;
@@ -41,10 +42,11 @@ public class MasterController {
     @Operation(method = "GET",
             summary = "Get all master",
             responses = @ApiResponse(responseCode = "200"))
-    List<MasterDto> getMasters(@RequestParam(required = false) MasterSortType sortType,
-                               @RequestParam(required = false) List<Speciality> filterParam) {
+    CustomPage getMasters(@RequestParam(required = false) MasterSortType sortType,
+                          @RequestParam(required = false) List<Speciality> filterParam,
+                          @RequestParam(defaultValue = "0") int pageNum) {
         log.info("Get all master, sort type - {}, filter param: {}", sortType, filterParam);
-        return masterService.getAllMaster(filterParam, sortType);
+        return masterService.getAllMaster(filterParam, sortType, pageNum);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

@@ -1,25 +1,49 @@
 package com.epam.spring.homework4.model;
 
 import com.epam.spring.homework4.model.enums.Role;
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-@Data
-@Component
-@ConfigurationProperties(prefix = "user")
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity
+@Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Updatable<User> {
-    private int id;
-    private String firstName;
-    private String lastName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String name;
+    private String surname;
+    @Column(nullable = false, unique = true)
     private String email;
     private String password;
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
     @Override
     public void update(User entity) {
-        this.firstName = entity.firstName;
-        this.lastName = entity.lastName;
+        this.name = entity.name;
+        this.surname = entity.surname;
         this.email = entity.email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

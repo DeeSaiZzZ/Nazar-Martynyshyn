@@ -4,6 +4,7 @@ import com.epam.spring.homework4.model.enums.Speciality;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Data
@@ -14,6 +15,7 @@ public class FavorDto {
     @NotBlank(message = "{favor.name.NotBlank}")
     private String name;
 
+    @NotNull
     private Speciality speciality;
 
     @Positive(message = "{favor.price.Positive}")
