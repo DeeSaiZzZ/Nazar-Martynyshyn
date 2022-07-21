@@ -34,3 +34,8 @@ info:
     version: 1.0.1-SNAPSHOT
     javaVersion: ${java.version}
     organisation: Epam Lab RD#32
+
+logging:
+  level:
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG

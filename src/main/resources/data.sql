@@ -5,6 +5,9 @@ FROM masters;
 DELETE
 FROM users;
 
+--*************************************************************************
+--                          TABLE users                                   *
+--*************************************************************************
 INSERT INTO BeautySalon.users (`id`, `email`, `name`, `surname`, `password`, `role`)
 VALUES (1, 'admin@gmail.com', 'Garri', 'Spacer', 'Splos2142132', 'ADMIN');
 INSERT INTO BeautySalon.users (`id`, `email`, `name`, `surname`, `password`, `role`)
@@ -14,10 +17,13 @@ VALUES (3, 'user3@gmail.com', 'Larry', 'Goodman', 'goodDayLarry', 'DEFAULT');
 INSERT INTO BeautySalon.users (`id`, `email`, `name`, `surname`, `password`, `role`)
 VALUES (4, 'user4@gmail.com', 'Illidan', 'DemonHunter', 'DemonDestr555', 'DEFAULT');
 INSERT INTO BeautySalon.users (`id`, `email`, `name`, `surname`, `password`, `role`)
-VALUES (5, 'user5@gmail.com', 'Kaelthas', 'Sunstrider', 'ovaCeltalas24212', 'DEFAULT');
+VALUES (5, 'user5@gmail.com', 'Kaelthas', 'Sunstrider', 'ovaKeltalas24212', 'DEFAULT');
 INSERT INTO BeautySalon.users (`id`, `email`, `name`, `surname`, `password`, `role`)
 VALUES (6, 'user6@gmail.com', 'Thrall', 'Ogrimar', 'LocktarOGar241569', 'DEFAULT');
 
+--*************************************************************************
+--                          TABLE masters                                   *
+--*************************************************************************
 INSERT INTO BeautySalon.users (`id`, `email`, `name`, `surname`, `password`, `role`)
 VALUES (7, 'master1@gmail.com', 'Garri', 'Spacer', 'Splos2142132', 'MASTER');
 INSERT INTO BeautySalon.users (`id`, `email`, `name`, `surname`, `password`, `role`)
@@ -48,8 +54,10 @@ VALUES (12, 'HAIRDRESSER', 3.2);
 INSERT INTO BeautySalon.masters (`id`, `speciality`, `rate`)
 VALUES (13, 'BEAUTICIAN', 1.2);
 
-DELETE
-FROM favors;
+DELETE FROM favors;
+--*************************************************************************
+--                          TABLE favors                                  *
+--*************************************************************************
 INSERT INTO BeautySalon.favors (`id`, `name`, `price`, `speciality`)
 VALUES (1, 'Манікюр класичний', 500, 'MANICURIST');
 INSERT INTO BeautySalon.favors (`id`, `name`, `price`, `speciality`)
