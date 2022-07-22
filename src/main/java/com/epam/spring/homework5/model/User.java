@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -26,6 +27,10 @@ public class User implements Updatable<User> {
     @Column(nullable = false, unique = true)
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "orderUser", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Order> usersOrder;
 
     @Enumerated(value = EnumType.STRING)
     private Role role;

@@ -105,6 +105,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public long countOrderByStatus(Status status) {
+        log.info("Start count order with status {}", status);
+        return orderRepository.countOrderByStatus(status);
+    }
+
+    @Override
     public void deleteOrder(int id) {
         log.info("Delete order by id {}", id);
         orderRepository.deleteById(id);

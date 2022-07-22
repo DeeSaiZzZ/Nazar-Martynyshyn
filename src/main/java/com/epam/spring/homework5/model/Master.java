@@ -4,10 +4,8 @@ import com.epam.spring.homework5.model.enums.Speciality;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,6 +18,10 @@ import java.util.Objects;
 public class Master extends User {
 
     private double rate;
+
+    @OneToMany(mappedBy = "orderMaster", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Order> timeTable;
 
     @Enumerated(value = EnumType.STRING)
     private Speciality speciality;

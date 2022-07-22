@@ -2,6 +2,7 @@ package com.epam.spring.homework5.controller;
 
 import com.epam.spring.homework5.dto.OrderDto;
 import com.epam.spring.homework5.dto.groups.OnCreate;
+import com.epam.spring.homework5.model.enums.Status;
 import com.epam.spring.homework5.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -66,6 +67,15 @@ public class OrderController {
         log.info("User with id {} want registered on order with id {}", userId, id);
         orderService.regUserOnOrder(id, userId);
         return ResponseEntity.noContent().build();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/num")
+    @Operation(method = "GET",
+            summary = "Get num of order by status")
+    long getNumOfOrderByStatus(@RequestParam Status status) {
+        log.info("Count order with status {}", status);
+        return orderService.countOrderByStatus(status);
     }
 
     @DeleteMapping("/{id}")

@@ -15,7 +15,6 @@ import com.epam.spring.homework5.model.exeptions.EntityAlreadyExists;
 import com.epam.spring.homework5.model.exeptions.EntityNotFoundException;
 import com.epam.spring.homework5.model.exeptions.IllegalStateException;
 import com.epam.spring.homework5.repository.MasterRepository;
-import com.epam.spring.homework5.repository.OrderRepository;
 import com.epam.spring.homework5.service.MasterService;
 import com.epam.spring.homework5.utils.FilterParamManager;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +26,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -37,8 +34,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MasterServiceImpl implements MasterService {
 
+    private static final String MASTER_NOT_FOUND_MESSAGE = "Master with id-%d not found";
+
     private final MasterRepository masterRepository;
-    private final OrderRepository orderRepository;
 
     private final OrderMapper orderMapper;
     private final MasterMapper masterMapper;
@@ -63,7 +61,7 @@ public class MasterServiceImpl implements MasterService {
     public MasterDto getMaster(int id) {
         log.info("Start get master with id {}", id);
         Master master = masterRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Master with id-%d not found", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(MASTER_NOT_FOUND_MESSAGE, id)));
 
         log.info("Finder master - {}", master);
         MasterDto masterDto = masterMapper.masterToMasterDto(master);
@@ -76,7 +74,7 @@ public class MasterServiceImpl implements MasterService {
     public MasterDto updateMaster(int id, MasterDto masterDto) {
         Master master = masterMapper.masterDtoToMaster(masterDto);
         Master persistMaster = masterRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Master with id-%d not found", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format(MASTER_NOT_FOUND_MESSAGE, id)));
 
         persistMaster.update(master);
         master = masterRepository.save(persistMaster);
@@ -102,12 +100,13 @@ public class MasterServiceImpl implements MasterService {
     @Transactional
     public List<OrderDto> getMastersTimeTable(int id) {
         log.info("Starting to find a schedule for master with id {}", id);
-        return orderRepository.findAllOrderByMasterId(id).stream()
+        Master persistMaster = masterRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(MASTER_NOT_FOUND_MESSAGE, id)));
+
+        return persistMaster.getTimeTable().stream()
                 .map(orderMapper::orderToOrderDto)
                 .peek(orderDto -> {
-                    if (orderDto.getOrderUser() != null) {
-                        orderDto.getOrderUser().setPassword(null);
-                    }
+                    orderDto.getOrderUser().setPassword(null);
                     orderDto.getOrderMaster().setPassword(null);
                 })
                 .collect(Collectors.toList());
@@ -117,24 +116,21 @@ public class MasterServiceImpl implements MasterService {
     @Transactional
     public void completeOrder(int masterId, int orderId) {
         log.info("Start pay process");
-        Order persistOrder = orderRepository.findById(orderId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Order with id-%d not found", orderId)));
+        Master master = masterRepository.findById(masterId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format(MASTER_NOT_FOUND_MESSAGE, masterId)));
 
-        Optional<Master> optionalMaster = Optional.ofNullable(persistOrder.getOrderMaster());
-        Master master = optionalMaster
-                .orElseThrow(() -> new IllegalStateException(String.format("Order with id-%d dont have a master", orderId)));
+        Order order = master.getTimeTable().stream()
+                .filter(o -> o.getId() == orderId)
+                .peek(o -> {
+                    if (!o.getOrderStatus().equals(Status.PAID)) {
+                        throw new IllegalStateException("Order with id-% isn't ready to complete");
+                    }
+                })
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Order with id-%d didn't exist in time table", orderId)));
 
-        if (master.getId() == masterId) {
-            if (persistOrder.getOrderStatus().equals(Status.PAID)) {
-                persistOrder.setOrderStatus(Status.COMPLETE);
-                persistOrder.setCompleteDate(new Date());
-            } else {
-                throw new IllegalStateException("Order is not ready for complete");
-            }
-        } else {
-            throw new IllegalStateException("The order is not yours");
-        }
-        orderRepository.save(persistOrder);
+        order.setOrderStatus(Status.COMPLETE);
+        masterRepository.save(master);
     }
 
     @Override
