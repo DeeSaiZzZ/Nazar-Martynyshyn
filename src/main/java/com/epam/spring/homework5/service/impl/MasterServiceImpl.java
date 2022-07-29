@@ -7,13 +7,11 @@ import com.epam.spring.homework5.mapper.OrderMapper;
 import com.epam.spring.homework5.model.CustomPage;
 import com.epam.spring.homework5.model.Master;
 import com.epam.spring.homework5.model.Order;
-import com.epam.spring.homework5.model.enums.MasterSortType;
-import com.epam.spring.homework5.model.enums.Role;
-import com.epam.spring.homework5.model.enums.Speciality;
-import com.epam.spring.homework5.model.enums.Status;
+import com.epam.spring.homework5.model.enums.*;
 import com.epam.spring.homework5.model.exeptions.EntityAlreadyExists;
 import com.epam.spring.homework5.model.exeptions.EntityNotFoundException;
 import com.epam.spring.homework5.model.exeptions.IllegalStateException;
+import com.epam.spring.homework5.model.exeptions.ServiceException;
 import com.epam.spring.homework5.repository.MasterRepository;
 import com.epam.spring.homework5.service.MasterService;
 import com.epam.spring.homework5.utils.FilterParamManager;
@@ -26,6 +24,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -106,7 +108,9 @@ public class MasterServiceImpl implements MasterService {
         return persistMaster.getTimeTable().stream()
                 .map(orderMapper::orderToOrderDto)
                 .peek(orderDto -> {
-                    orderDto.getOrderUser().setPassword(null);
+                    if (orderDto.getOrderUser() != null) {
+                        orderDto.getOrderUser().setPassword(null);
+                    }
                     orderDto.getOrderMaster().setPassword(null);
                 })
                 .collect(Collectors.toList());
@@ -129,7 +133,20 @@ public class MasterServiceImpl implements MasterService {
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Order with id-%d didn't exist in time table", orderId)));
 
+        try {
+            String dateToParse = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+            order.setCompleteDate(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(dateToParse));
+        } catch (ParseException exp) {
+            throw new ServiceException(exp.getMessage()) {
+                @Override
+                public ErrorType getErrorType() {
+                    return ErrorType.FATAL_ERROR_TYPE;
+                }
+            };
+        }
+
         order.setOrderStatus(Status.COMPLETE);
+
         masterRepository.save(master);
     }
 

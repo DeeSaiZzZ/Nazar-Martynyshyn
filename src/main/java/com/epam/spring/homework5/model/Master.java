@@ -1,5 +1,6 @@
 package com.epam.spring.homework5.model;
 
+import com.epam.spring.homework5.model.enums.Role;
 import com.epam.spring.homework5.model.enums.Speciality;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -16,6 +17,14 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Master extends User {
+
+    public Master(Integer id, String name, String surname, String email, String password,
+                  List<Order> usersOrder, Role role, double rate, List<Order> timeTable, Speciality speciality) {
+        super(id, name, surname, email, password, usersOrder, role);
+        this.rate = rate;
+        this.timeTable = timeTable;
+        this.speciality = speciality;
+    }
 
     private double rate;
 
