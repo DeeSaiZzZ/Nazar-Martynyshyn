@@ -29,7 +29,7 @@ public class MasterDto {
 
     @NotBlank(message = "{master.password.NotBlank}", groups = OnCreate.class)
     @Null(message = "{master.password.Null}", groups = OnUpdate.class)
-    @RequiredPasswordLength(passLength = 10, message = "{master.password.RequiredPasswordLength}")
+    @RequiredPasswordLength(passLength = 10, message = "{master.password.RequiredPasswordLength}", groups = OnCreate.class)
     @Schema(description = "Password must be longer then 10 symbols")
     @ToString.Exclude
     private String password;

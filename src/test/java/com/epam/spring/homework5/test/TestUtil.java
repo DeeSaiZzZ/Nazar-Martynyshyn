@@ -11,6 +11,7 @@ import com.epam.spring.homework5.model.enums.Status;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +29,8 @@ public final class TestUtil {
 
     //Create user entity without order
     public static User createTestUser() {
-        return new User(1, "TestUser1", "Test1", "test@mail.com", null, null, Role.DEFAULT);
+        return new User(1, "TestUser1", "Test1", "test@mail.com", null,
+                Collections.emptyList(), Role.DEFAULT);
     }
 
     //Create user entity with order
@@ -65,7 +67,7 @@ public final class TestUtil {
     public static Master createTestMasterWithoutTimetable() {
         return new Master(1, "NMaster1", "SMaster1",
                 "master@gmail.com", null,
-                null, Role.MASTER, 3.4, null, Speciality.HAIRDRESSER);
+                null, Role.MASTER, 3.4, Collections.emptyList(), Speciality.HAIRDRESSER);
     }
 
     //Create Master entity with timetable
@@ -111,6 +113,7 @@ public final class TestUtil {
                 new Favor(idIndex, "TestName8", Speciality.BEAUTICIAN, 200));
     }
 
+    //Create user entity list
     public static List<User> createUserTestList() {
         int idIndex = 1;
 
@@ -127,7 +130,7 @@ public final class TestUtil {
                         "test4@mail.com", null, null, Role.DEFAULT));
     }
 
-    //Create Master entity list with timetable
+    //Create Master entity list
     public static List<Master> createMasterTestList() {
         int idIndex = 1;
 

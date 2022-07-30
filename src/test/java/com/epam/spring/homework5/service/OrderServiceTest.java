@@ -37,31 +37,31 @@ import static org.mockito.Mockito.*;
 class OrderServiceTest {
 
     @InjectMocks
-    OrderServiceImpl orderService;
+    private OrderServiceImpl orderService;
 
     @Mock
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Mock
-    MasterService masterService;
+    private MasterService masterService;
 
     @Mock
-    FavorService favorService;
+    private FavorService favorService;
 
     @Mock
-    UserService userService;
+    private UserService userService;
 
     @Spy
-    OrderMapperImpl orderMapper;
+    private OrderMapperImpl orderMapper;
 
     @Spy
-    MasterMapperImpl masterMapper;
+    private MasterMapperImpl masterMapper;
 
     @Spy
-    FavorMapperImpl favorMapper;
+    private FavorMapperImpl favorMapper;
 
     @Spy
-    UserMapperImpl userMapper;
+    private UserMapperImpl userMapper;
 
     @Test
     void createOrderTest() throws ParseException {

@@ -37,13 +37,13 @@ import static org.mockito.Mockito.*;
 class FavorServiceTest {
 
     @InjectMocks
-    FavorServiceImpl favorService;
+    private FavorServiceImpl favorService;
 
     @Mock
-    FavorRepository favorRepository;
+    private FavorRepository favorRepository;
 
     @Spy
-    FavorMapperImpl favorMapper;
+    private FavorMapperImpl favorMapper;
 
     @Test
     void getFavorTest() {

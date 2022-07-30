@@ -35,16 +35,16 @@ import static org.mockito.Mockito.*;
 class UserServiceTest {
 
     @InjectMocks
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
 
     @Mock
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Spy
-    UserMapperImpl userMapper;
+    private UserMapperImpl userMapper;
 
     @Spy
-    OrderMapperImpl orderMapper;
+    private OrderMapperImpl orderMapper;
 
     @Test
     void createUserTest() {

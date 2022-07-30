@@ -17,6 +17,10 @@ public class PasswordLengthValidator implements ConstraintValidator<RequiredPass
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
-        return password.length() >= passwordLength;
+        if (password == null) {
+            return false;
+        } else {
+            return password.length() >= passwordLength;
+        }
     }
 }

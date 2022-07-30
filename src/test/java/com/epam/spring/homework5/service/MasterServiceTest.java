@@ -41,16 +41,16 @@ import static org.mockito.Mockito.*;
 class MasterServiceTest {
 
     @InjectMocks
-    MasterServiceImpl masterService;
+    private MasterServiceImpl masterService;
 
     @Mock
-    MasterRepository masterRepository;
+    private MasterRepository masterRepository;
 
     @Spy
-    MasterMapperImpl masterMapper;
+    private MasterMapperImpl masterMapper;
 
     @Spy
-    OrderMapperImpl orderMapper;
+    private OrderMapperImpl orderMapper;
 
     @Test
     void createMasterTest() {
