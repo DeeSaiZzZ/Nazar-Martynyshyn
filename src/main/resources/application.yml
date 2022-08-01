@@ -1,0 +1,41 @@
+management:
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "info, health"
+  endpoint:
+    health:
+      show-details: always
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/BeautySalon
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: always
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+
+
+info:
+  application:
+    author: Nazar Martynyshyn
+    name: Beauty-Salon-Management
+    description: API for management beauty salon
+    version: 1.0.1-SNAPSHOT
+    javaVersion: ${java.version}
+    organisation: Epam Lab RD#32
+
+logging:
+  level:
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG
