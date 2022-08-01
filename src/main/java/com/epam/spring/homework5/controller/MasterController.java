@@ -29,7 +29,7 @@ public class MasterController {
 
     private final MasterService masterService;
 
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     @Operation(method = "GET",
             summary = "Get master by id")

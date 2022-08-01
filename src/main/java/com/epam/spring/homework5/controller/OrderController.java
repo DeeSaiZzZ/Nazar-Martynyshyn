@@ -35,7 +35,7 @@ public class OrderController {
         return orderService.getAllOrder();
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @Operation(method = "POST",
             summary = "Create order",
@@ -54,7 +54,7 @@ public class OrderController {
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Fill field id in orderUser, " +
                     "orderMaster, orderFavor, orderStatus,timeSlot, completeDate"),
             responses = @ApiResponse(responseCode = "200"))
-    OrderDto updateOrder(@PathVariable int id, @RequestBody OrderDto orderDto) {
+    OrderDto updateOrder(@PathVariable int id, @RequestBody @Validated OrderDto orderDto) {
         log.info("Update order with id {} new entity {}", id, orderDto);
         return orderService.updateOrder(id, orderDto);
     }
